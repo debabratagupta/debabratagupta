@@ -247,6 +247,52 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 <!-- END PAGE CONTENT -->
 </div>
 
+<!-- Hidden audio element -->
+<audio id="background-audio" autoplay preload="auto">
+  <source src="./Audio/Solo Tabla by Debabrata Gupta.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<!-- Custom audio control bar -->
+<div id="audio-controls" style="position: fixed; bottom: 0; width: 100%; background-color: #111; color: white; text-align: center; padding: 10px; z-index: 1000;">
+  <button id="play-pause" style="background:none; border:none; color:white; font-size:18px; margin-right:15px;">⏸ Pause</button>
+  <button id="mute-unmute" style="background:none; border:none; color:white; font-size:18px;">🔊 Mute</button>
+</div>
+
+<script>
+  const audio = document.getElementById('background-audio');
+  const playPauseBtn = document.getElementById('play-pause');
+  const muteUnmuteBtn = document.getElementById('mute-unmute');
+
+  // Attempt to play audio once the user interacts (browser restriction workaround)
+  const startAudio = () => {
+    audio.play().then(() => {
+      // success
+    }).catch(err => {
+      console.warn('Autoplay blocked:', err);
+    });
+  };
+  document.body.addEventListener('click', startAudio, { once: true });
+
+  // Toggle play/pause
+  playPauseBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      playPauseBtn.textContent = '⏸ Pause';
+    } else {
+      audio.pause();
+      playPauseBtn.textContent = '▶️ Play';
+    }
+  });
+
+  // Toggle mute/unmute
+  muteUnmuteBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    muteUnmuteBtn.textContent = audio.muted ? '🔇 Unmute' : '🔊 Mute';
+  });
+</script>
+
+
 </body>
 </html>
 
