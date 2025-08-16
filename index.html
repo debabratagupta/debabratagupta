@@ -23,6 +23,9 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 </style>
 </head>
 <body class="w3-black">
+  <div id="audio-prompt" style="position:fixed; top:0; left:0; right:0; background:#111; color:white; text-align:center; padding:10px; z-index:1000;">
+  <span>🔊 Tap to start music</span>
+  </div>
 
 <!-- Icon Bar (Sidebar - hidden on small screens) -->
 <nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
@@ -247,8 +250,34 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 <!-- END PAGE CONTENT -->
 </div>
 
+  <div style="position:fixed; bottom:0; width:100%; background-color:#111; padding:10px; text-align:center; z-index:1000;">
+  <audio id="background-audio" controls style="width:90%;">
+    <source src="./Audio/Solo Tabla by Debabrata Gupta.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+</div>
+
+<script>
+  const audio = document.getElementById("background-audio");
+  const prompt = document.getElementById("audio-prompt");
+
+  const startAudio = () => {
+    audio.play()
+      .then(() => {
+        prompt.style.display = 'none'; // Hide prompt
+      })
+      .catch(err => {
+        console.log("Autoplay blocked:", err);
+      });
+  };
+
+  // Start audio on first interaction
+  document.body.addEventListener('click', startAudio, { once: true });
+</script>
+  
 </body>
 </html>
+
 
 
 
